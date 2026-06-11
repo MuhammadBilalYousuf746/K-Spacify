@@ -1,0 +1,6 @@
+node_modules/
+.env
+frontend/.angular/
+frontend/dist/
+backend/node_modules/
+backend/.env
