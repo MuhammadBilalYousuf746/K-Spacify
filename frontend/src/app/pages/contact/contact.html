@@ -1,0 +1,40 @@
+<section class="contact-hero">
+  <div class="container">
+    <div class="eyebrow">Get In Touch</div>
+    <h1>Let's<br><span>Connect</span></h1>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="container contact-grid">
+
+    <div class="contact-left">
+      <div class="eyebrow">Contact Info</div>
+      <h2>Have a question?<br>We are here to help.</h2>
+      <p>Whether you are looking to list a venue, make a booking, or just have a general inquiry — feel free to reach out to us directly.</p>
+
+      <div class="details-list">
+        @for (detail of details; track detail.label) {
+          <div class="detail-item">
+            <div class="detail-icon">{{ detail.icon }}</div>
+            <div>
+              <span class="detail-label">{{ detail.label }}</span>
+              <p class="detail-value">{{ detail.value }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <div class="map-placeholder">
+        <div class="map-inner">
+          <div class="map-pin">📍</div>
+          <p>SZABIST 100 Building, Block 5</p>
+          <span>Clifton - Karachi, Pakistan</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<div class="login-page">
+  <div class="login-box">
+    <div class="login-logo">K<span>—</span>Spacify</div>
+    <div class="login-eyebrow">Admin Portal</div>
+    <h2>Welcome Back</h2>
+    <p>Please log in to access the dashboard</p>
+
+    @if (error) {
+      <div class="error-msg">⚠️ {{ error }}</div>
+    }
+
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        placeholder="admin@kspacify.com"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="••••••••"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <button class="btn-primary full" (click)="submit()" [disabled]="loading">
+      {{ loading ? 'Logging in...' : 'Login →' }}
+    </button>
+
+    <div class="hint">
+      <span>Email: admin&#64;kspacify.com</span>
+      <span>Password: admin123</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">K<span>—</span>Spacify</div>
+    <div class="sidebar-label">Admin Panel</div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active">📋 Bookings</a>
+    </nav>
+
+    <button class="logout-btn" (click)="logout()">
+      ← Logout
+    </button>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <div>
+        <h1>Bookings</h1>
+        <p>See All the Bookings....</p>
+      </div>
+      <button class="btn-outline small" (click)="loadBookings()">↻ Refresh</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <span>Total</span>
+        <strong>{{ stats.total }}</strong>
+      </div>
+      <div class="stat-card pending">
+        <span>Pending</span>
+        <strong>{{ stats.pending }}</strong>
+      </div>
+      <div class="stat-card approved">
+        <span>Approved</span>
+        <strong>{{ stats.approved }}</strong>
+      </div>
+      <div class="stat-card rejected">
+        <span>Rejected</span>
+        <strong>{{ stats.rejected }}</strong>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button [class.active]="activeTab === 'all'" (click)="activeTab = 'all'">All</button>
+      <button [class.active]="activeTab === 'pending'" (click)="activeTab = 'pending'">Pending</button>
+      <button [class.active]="activeTab === 'approved'" (click)="activeTab = 'approved'">Approved</button>
+      <button [class.active]="activeTab === 'rejected'" (click)="activeTab = 'rejected'">Rejected</button>
+    </div>
+
+    <!-- Loading Skeleton -->
+    @if (loading) {
+      <div class="skeleton-table">
+        @for (i of [1,2,3,4,5]; track i) {
+          <div class="skeleton-row">
+            <div class="skeleton-cell wide"></div>
+            <div class="skeleton-cell"></div>
+            <div class="skeleton-cell narrow"></div>
+            <div class="skeleton-cell narrow"></div>
+            <div class="skeleton-cell narrow"></div>
+            <div class="skeleton-cell narrow"></div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Bookings Table -->
+    @if (!loading) {
+      @if (filteredBookings.length === 0) {
+        <div class="empty-state">
+          <span>📭</span>
+          <p>No Booking found</p>
+        </div>
+      } @else {
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Venue</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>People</th>
+                <th>Timing</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (booking of filteredBookings; track booking._id) {
+                <tr>
+                  <td>
+                    <strong>{{ booking.venueId?.name || 'N/A' }}</strong>
+                    <span class="sub">{{ booking.venueId?.area }}</span>
+                  </td>
+                  <td>
+                    <strong>{{ booking.name }}</strong>
+                    <span class="sub">{{ booking.phone }}</span>
+                  </td>
+                  <td>{{ booking.date }}</td>
+                  <td>{{ booking.numberOfPeople }}</td>
+                  <td>{{ booking.timing }}</td>
+                  <td>
+                    <span class="status-badge" [class]="booking.status.toLowerCase()">
+                      {{ booking.status }}
+                    </span>
+                  </td>
+                  <td>
+                    @if (booking.status === 'Pending') {
+                      <div class="action-btns">
+                        <button class="approve-btn" (click)="updateStatus(booking._id, 'Approved')">
+                          ✓ Approve
+                        </button>
+                        <button class="reject-btn" (click)="updateStatus(booking._id, 'Rejected')">
+                          ✗ Reject
+                        </button>
+                      </div>
+                    } @else {
+                      <button class="reset-btn" (click)="updateStatus(booking._id, 'Pending')">
+                        ↺ Reset
+                      </button>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+
+  </main>
+</div>

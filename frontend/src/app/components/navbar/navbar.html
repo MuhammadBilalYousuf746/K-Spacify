@@ -1,0 +1,22 @@
+<nav [class.scrolled]="isScrolled()">
+  <div class="container nav-inner">
+    <a routerLink="/" class="logo">
+      K<span>—</span>Spacify
+    </a>
+
+    <ul class="nav-links" [class.open]="menuOpen()">
+      <li><a routerLink="/about" routerLinkActive="active" (click)="menuOpen.set(false)">About</a></li>
+      <li><a routerLink="/team" routerLinkActive="active" (click)="menuOpen.set(false)">Team</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active" (click)="menuOpen.set(false)">Contact</a></li>
+      <li>
+        <a routerLink="/booking" class="btn-primary" (click)="menuOpen.set(false)">Book a Space</a>
+      </li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()">
+      <span [class.open]="menuOpen()"></span>
+      <span [class.open]="menuOpen()"></span>
+      <span [class.open]="menuOpen()"></span>
+    </button>
+  </div>
+</nav>

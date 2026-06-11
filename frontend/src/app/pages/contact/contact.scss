@@ -1,0 +1,290 @@
+.contact-hero {
+  min-height: 50vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 100px; // Slightly increased for a more spacious luxury feel
+  padding-top: 180px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.12) 0%, transparent 70%); // Richer gradient glow
+  border-bottom: 1px solid var(--border);
+  position: relative;
+
+  // Premium background texture highlight
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px; // Increased tracking for high-end look
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.8;
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif; // Premium typography pairing
+    font-size: clamp(42px, 6.5vw, 76px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    span { 
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+  }
+}
+
+.contact-section {
+  background: var(--primary);
+  padding: 120px 0; // Seamless luxury section spacing
+
+  @media (max-width: 768px) {
+    padding: 60px 0;
+  }
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr; // Sophisticated asymmetrical layout
+  gap: 100px;
+  align-items: start;
+
+  @media (max-width: 1024px) {
+    gap: 50px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+}
+
+.contact-left {
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 3.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  > p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0.9;
+  }
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(10px); // Premium frosted glass hint
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); // Butter smooth transition
+  position: relative;
+  overflow: hidden;
+
+  &:last-child { border-bottom: none; }
+  
+  // Luxury subtle glow on hover
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  &:hover { 
+    background: var(--card-bg); 
+    transform: translateX(4px); // Micro-interaction movement
+    box-shadow: inset 10px 0 20px rgba(201, 168, 76, 0.02);
+    
+    &::before {
+      transform: scaleY(1);
+    }
+
+    .detail-icon {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
+    }
+  }
+
+  .detail-icon {
+    font-size: 22px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .detail-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .detail-value {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+    gap: 16px;
+  }
+}
+
+.contact-right {
+  position: sticky;
+  top: 120px;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: 0;
+  }
+}
+
+.map-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+
+  &:hover {
+    border-color: rgba(201, 168, 76, 0.3);
+    box-shadow: 0 40px 80px rgba(201, 168, 76, 0.05);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px; // Elegant wider architectural grid
+  }
+
+  // Premium vignette vignette gradient overlay
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 20%, var(--card-bg) 95%);
+    pointer-events: none;
+  }
+}
+
+.map-inner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: 0 24px;
+
+  .map-pin {
+    font-size: 52px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+    animation: premiumBounce 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  p {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+}
+
+// Sophisticated inertia bounce effect
+@keyframes premiumBounce {
+  0%, 100% { 
+    transform: translateY(0) scale(1); 
+  }
+  50% { 
+    transform: translateY(-14px) scale(1.03); 
+  }
+}

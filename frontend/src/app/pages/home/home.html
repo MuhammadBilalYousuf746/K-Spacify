@@ -1,0 +1,83 @@
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="eyebrow">Karachi's Event Space Platform</div>
+    <h1>Book Your Perfect<br><span>Event Space</span><br>in Karachi</h1>
+    <p>Dholki, birthdays, corporate events, cricket grounds — everything in one place. No physical visits required.</p>
+    <div class="hero-actions">
+      <a routerLink="/booking" class="btn-primary">Explore Spaces</a>
+      <a routerLink="/about" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span></span>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      @for (stat of stats; track stat.number) {
+        <div class="stat-card">
+          <h2>{{ stat.number }}</h2>
+          <p>{{ stat.label }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Why K-Spacify</div>
+      <h2>We keep everything<br>simple</h2>
+    </div>
+    <div class="features-grid">
+      @for (f of features; track f.title) {
+        <div class="feature-card">
+          <div class="feature-icon">{{ f.icon }}</div>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="eyebrow">Ready to Book?</div>
+      <h2>Find your perfect space<br>right now</h2>
+      <p>Apply filters — area, capacity, budget, timing — and view the best options.</p>
+      <a routerLink="/booking" class="btn-primary">Start Searching</a>
+    </div>
+  </div>
+</section>
+
+<!-- Admin Access -->
+<section class="admin-access">
+  <div class="container">
+    <div class="admin-card">
+      <div class="admin-card-left">
+        <div class="admin-icon">🔐</div>
+        <div class="admin-card-text">
+          <div class="admin-eyebrow">Restricted Access</div>
+          <h3>Admin Dashboard</h3>
+          <p>Manage booking requests — approve or reject entries instantly</p>
+        </div>
+      </div>
+      <a routerLink="/admin/login" class="admin-btn">
+        Enter Dashboard
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>

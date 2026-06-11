@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+// ── Scroll Animations ──
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(.22, 1, .36, 1),
+              transform 0.7s cubic-bezier(.22, 1, .36, 1);
+  &.visible { opacity: 1; transform: translateY(0); }
+}
+.fade-left {
+  opacity: 0; transform: translateX(-28px);
+  transition: opacity 0.7s cubic-bezier(.22, 1, .36, 1),
+              transform 0.7s cubic-bezier(.22, 1, .36, 1);
+  &.visible { opacity: 1; transform: translateX(0); }
+}
+.delay-1 { transition-delay: 0.12s; }
+.delay-2 { transition-delay: 0.24s; }
+
+// ── Hero ──
+.team-hero {
+  min-height: 50vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+  padding-top: 160px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.07) 0%, transparent 60%);
+  border-bottom: 1px solid var(--border);
+
+  @media (max-width: 768px) {
+    min-height: 40vh;
+    padding-top: 100px;
+    padding-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    &::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.1;
+    span { color: var(--accent); }
+  }
+}
+
+// ── Team Section ──
+.team-section {
+  background: var(--primary);
+  padding: 80px 0;
+
+  @media (max-width: 768px) { padding: 48px 0; }
+}
+
+.team-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (max-width: 768px) { gap: 16px; }
+}
+
+// ── Member Card ──
+.member-card {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--primary);
+  position: relative;
+  transition: border-color 0.35s ease, transform 0.35s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.55), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+  }
+
+  &:hover {
+    border-color: rgba(201, 168, 76, 0.35);
+    transform: translateY(-4px);
+    &::after { opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    border-radius: 12px;
+  }
+}
+
+// ── Avatar ──
+.member-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 300px;
+  background: var(--secondary);
+  border-right: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(201, 168, 76, 0.07) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 2px solid rgba(201, 168, 76, 0.3);
+    position: relative;
+    z-index: 1;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .cast-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.5;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 160px;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0 24px;
+    gap: 16px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+
+    .avatar-img { width: 72px; height: 72px; }
+    .cast-label { display: none; }
+  }
+}
+
+.member-card:hover .avatar-img {
+  border-color: rgba(201, 168, 76, 0.7);
+  transform: scale(1.03);
+}
+
+// ── Info Panel ──
+.member-info {
+  position: relative;
+}
+
+.member-details {
+  padding: 44px 48px;
+
+  @media (max-width: 768px) { padding: 28px 22px; }
+}
+
+// ── Member Header ──
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 20px;
+
+  h2 {
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .role {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+// ── Social Buttons ──
+.social-links {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+
+  svg { flex-shrink: 0; }
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(201, 168, 76, 0.05);
+  }
+
+  &.github:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  @media (max-width: 400px) {
+    justify-content: center;
+    padding: 11px 16px;
+  }
+}
+
+// ── Bio ──
+.bio {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  max-width: 560px;
+
+  @media (max-width: 768px) { font-size: 14px; }
+}
+
+// ── Studio Banner ──
+.studio-banner {
+  background: var(--secondary);
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+}
+
+.banner-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p { font-size: 15px; color: var(--text-secondary); }
+
+  span {
+    font-size: 13px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    strong { color: var(--accent); }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

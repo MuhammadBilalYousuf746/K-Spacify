@@ -1,0 +1,290 @@
+<!-- Receipt Modal -->
+@if (showReceipt && lastBooking) {
+  <div class="receipt-overlay" (click)="closeReceipt()">
+    <div class="receipt-modal" (click)="$event.stopPropagation()">
+
+      <div class="receipt-header">
+        <div class="receipt-logo">K<span>—</span>Spacify</div>
+        <div class="receipt-badge">✅ Booking Confirmed</div>
+      </div>
+
+      <div class="receipt-id">
+        <span>Receipt No.</span>
+        <strong>{{ lastBooking.receiptId }}</strong>
+      </div>
+
+      <div class="receipt-section">
+        <h4>Venue Details</h4>
+        <div class="receipt-row">
+          <span>Venue</span>
+          <strong>{{ lastBooking.venueName }}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Area</span>
+          <strong>{{ lastBooking.venueArea }}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Address</span>
+          <strong>{{ lastBooking.venueAddress }}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Price</span>
+          <strong>PKR {{ lastBooking.pricePerDay | number }} / day</strong>
+        </div>
+      </div>
+
+      <div class="receipt-divider"></div>
+
+      <div class="receipt-section">
+        <h4>Booking Details</h4>
+        <div class="receipt-row">
+          <span>Name</span>
+          <strong>{{ lastBooking.name }}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Phone</span>
+          <strong>{{ lastBooking.phone }}</strong>
+        </div>
+        @if (lastBooking.email) {
+          <div class="receipt-row">
+            <span>Email</span>
+            <strong>{{ lastBooking.email }}</strong>
+          </div>
+        }
+        <div class="receipt-row">
+          <span>Date</span>
+          <strong>{{ lastBooking.date }}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>People</span>
+          <strong>{{ lastBooking.numberOfPeople }}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Timing</span>
+          <strong>{{ lastBooking.timing }}</strong>
+        </div>
+        @if (lastBooking.message) {
+          <div class="receipt-row">
+            <span>Note</span>
+            <strong>{{ lastBooking.message }}</strong>
+          </div>
+        }
+      </div>
+
+      <div class="receipt-divider"></div>
+
+      <div class="receipt-status">
+        <div class="status-badge">⏳ Pending Approval</div>
+        <p>Our team will soon contact you at <strong>{{ lastBooking.phone }}</strong> for verification.</p>
+      </div>
+
+      <div class="receipt-footer">
+        <span>Submitted: {{ lastBooking.submittedAt }}</span>
+        <span>Developed by Roniq Studios</span>
+      </div>
+
+      <div class="receipt-actions">
+        <button class="btn-outline" (click)="printReceipt()">🖨️ Print Receipt</button>
+        <button class="btn-primary" (click)="closeReceipt()">Done</button>
+      </div>
+
+    </div>
+  </div>
+}
+
+<section class="booking-hero">
+  <div class="container">
+    <div class="eyebrow">Find Your Space</div>
+    <h1>Filter your<br><span>ideal venue</span></h1>
+  </div>
+</section>
+
+<!-- Filters -->
+<section class="filters-section">
+  <div class="container">
+    <div class="filters-box">
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label>Area</label>
+          <select [(ngModel)]="filters.area">
+            <option value="">All</option>
+            @for (area of areas; track area) {
+              <option [value]="area">{{ area }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Min. Capacity (people)</label>
+          <input type="number" [(ngModel)]="filters.capacity" placeholder="e.g. 50" />
+        </div>
+
+        <div class="filter-group">
+          <label>Max Budget (PKR)</label>
+          <input type="number" [(ngModel)]="filters.budget" placeholder="e.g. 50000" />
+        </div>
+
+        <div class="filter-group">
+          <label>Timing</label>
+          <select [(ngModel)]="filters.timing">
+            <option value="">Select</option>
+            @for (t of timings; track t) {
+              <option [value]="t">{{ t }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary search-btn" (click)="searchVenues()">
+        Search Venues
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+@if (loading) {
+  <section class="results-section">
+    <div class="container">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Searching for venues...</p>
+      </div>
+    </div>
+  </section>
+}
+
+@if (!loading && searched) {
+  <section class="results-section">
+    <div class="container">
+
+      @if (bookingSuccess) {
+        <div class="success-banner">
+          <span>✅</span>
+          <div>
+            <h3>Booking Request Sent!</h3>
+            <p>We will contact you shortly to confirm your booking.</p>
+          </div>
+          <button class="btn-outline" (click)="resetSearch()">New Search</button>
+        </div>
+      }
+
+      @if (venues.length === 0 && !bookingSuccess) {
+        <div class="empty-state">
+          <span>🔍</span>
+          <h3>No venues found</h3>
+          <p>Try adjusting your filters and search again.</p>
+        </div>
+      }
+
+      @if (venues.length > 0) {
+        <div class="results-header">
+          <h2>{{ venues.length }} venue{{ venues.length > 1 ? 's' : '' }} found</h2>
+          <button class="btn-outline small" (click)="resetSearch()">Reset</button>
+        </div>
+
+        <div class="venues-grid">
+          @for (venue of venues; track venue._id) {
+            <div class="venue-card" [class.selected]="selectedVenue?._id === venue._id">
+              <div class="venue-header">
+                <div>
+                  <h3>{{ venue.name }}</h3>
+                  <span class="venue-area">📍 {{ venue.area }}</span>
+                </div>
+                <div class="venue-price">
+                  <span>PKR {{ venue.pricePerDay | number }}</span>
+                  <small>per day</small>
+                </div>
+              </div>
+
+              <p class="venue-desc">{{ venue.description }}</p>
+
+              <div class="venue-tags">
+                <span class="tag">👥 {{ venue.capacity }} people</span>
+                <span class="tag">🕐 {{ venue.timing }}</span>
+                @if (venue.isAvailable) {
+                  <span class="tag available">✅ Available</span>
+                } @else {
+                  <span class="tag booked">❌ Booked</span>
+                }
+              </div>
+
+              @if (venue.amenities?.length) {
+                <div class="amenities">
+                  @for (a of venue.amenities; track a) {
+                    <span class="amenity">{{ a }}</span>
+                  }
+                </div>
+              }
+
+              <button
+                class="btn-primary full-width"
+                [disabled]="!venue.isAvailable"
+                (click)="selectVenue(venue)">
+                {{ selectedVenue?._id === venue._id ? '✓ Selected' : 'Book This Venue' }}
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Booking Form -->
+      @if (selectedVenue) {
+        <div class="booking-form-section" id="booking-form">
+          <div class="form-header">
+            <div class="eyebrow">Booking Request</div>
+            <h2>Book {{ selectedVenue.name }}</h2>
+            <p>After submitting this form, our team will reach out to verify and confirm your request.</p>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" [(ngModel)]="bookingForm.name" placeholder="Muhammad Bilal" />
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="text" [(ngModel)]="bookingForm.phone" placeholder="+92 300 1234567" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" [(ngModel)]="bookingForm.email" placeholder="bilal@email.com" />
+            </div>
+            <div class="form-group">
+              <label>Date *</label>
+              <input type="date" [(ngModel)]="bookingForm.date" />
+            </div>
+            <div class="form-group">
+              <label>Number of People *</label>
+              <input type="number" [(ngModel)]="bookingForm.numberOfPeople" placeholder="50" />
+            </div>
+            <div class="form-group">
+              <label>Timing *</label>
+              <select [(ngModel)]="bookingForm.timing">
+                <option value="">Select timing</option>
+                @for (t of timings; track t) {
+                  <option [value]="t">{{ t }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group fill-span">
+              <label>Message (optional)</label>
+              <textarea [(ngModel)]="bookingForm.message" placeholder="Specify any special requirements here..." rows="4"></textarea>
+            </div>
+          </div>
+
+          @if (bookingError) {
+            <div class="booking-error">
+              ⚠️ {{ bookingError }}
+            </div>
+          }
+
+          <button class="btn-primary" (click)="submitBooking()">
+            Submit Booking Request →
+          </button>
+        </div>
+      }
+
+    </div>
+  </section>
+}
